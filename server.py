@@ -34,8 +34,7 @@ def stationData(data):
     :param data:
     :return:
     """
-    #emit(data["id"] + ' has sent : '+ data["data"], room=data["room"], broadcast=True)
-    print(data)
+    emit(data["id"] + ' has sent : '+ data["data"], room=data["room"], broadcast=True)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    app.run()
