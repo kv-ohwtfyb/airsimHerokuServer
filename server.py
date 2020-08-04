@@ -10,7 +10,7 @@ socketio = SocketIO(app)
 messages = [] #It's a list containing the activities that happened on the server
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(base_dir, 'server/database/dbTesting.sqlite')
+db_path = os.path.join(base_dir, '/database/dbTesting.sqlite')
 
 @app.route("/")
 def helloWorld():
