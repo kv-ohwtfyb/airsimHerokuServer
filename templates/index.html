@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>Airsim</title>
+    </head>
+    <body>
+        {% block body %}
+        {% for message in messages %}
+            <h1>{{ message }}</h1>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>
