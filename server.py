@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, join_room, send, disconnect, emit
 from flask_sqlalchemy import SQLAlchemy
 import os, sqlite3
-from airsim import models
+import models
 
 #Configure App
 app = Flask(__name__)
