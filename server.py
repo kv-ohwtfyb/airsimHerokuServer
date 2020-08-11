@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, join_room, send, disconnect, emit
 from flask_sqlalchemy import SQLAlchemy
-import os, sqlite3, json
+import os, sqlite3
 from airsim import models
 
 #Configure App
@@ -10,8 +10,10 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 #Configure database
-app.config["SQLALCHEMY_DATABASE_URI"]="""postgres://mynykzmxrgomnr:37d166bbca8361ae9bff92d8814e534458776511f96498f9246714161dbc3439@ec2-54-247-118-139.eu-west-1.compute.amazonaws.com:5432/ddvcl8up8gjd8l
-"""
+#The next line is when we are testing locally
+#app.config["SQLALCHEMY_DATABASE_URI"]="""postgres://mynykzmxrgomnr:37d166bbca8361ae9bff92d8814e534458776511f96498f9246714161dbc3439@ec2-54-247-118-139.eu-west-1.compute.amazonaws.com:5432/ddvcl8up8gjd8l"""
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") #This is for security mesures
+
 db = SQLAlchemy(app)
 
 #Variables
@@ -55,8 +57,8 @@ def when_join(data):
                             stations_list.append(station_dict)
 
                     room_dict["stations"] = stations_list
+                    rooms.append(room_dict)
 
-                rooms.append(room_dict)
             dict["rooms"]=rooms
             send("sending")
             emit("initial", dict)
