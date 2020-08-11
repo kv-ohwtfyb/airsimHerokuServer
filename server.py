@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-messages = [] #It's a list containing the activities that happened on the server
+messages = ["Server is running"] #It's a list containing the activities that happened on the server
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(base_dir, '/database/dbTesting.sqlite')
