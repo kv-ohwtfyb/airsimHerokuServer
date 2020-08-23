@@ -80,7 +80,7 @@ def findRoomForStation(stationId):
     :return a string, else None
     """
     try:
-        room_objects = models.Room.query.filter_by().all()
+        room_objects = models.Room.query.all()
         for room in room_objects:
             if stationId in room.stations:
                 return room.id
