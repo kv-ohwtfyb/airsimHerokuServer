@@ -31,9 +31,7 @@ def when_join(data):
     A dict {"password":"id"}
     :return: None, a boolean method but does what's necessarily for the connection.
     """
-    print(data.keys())
-    print(len(data.keys()))
-    if "password" in data.keys(): #If it's a client
+    if "password" in data.keys() and len(data.keys())==1: #If it's a client
         password = data['password']
         user_object = findClient(password)
         if user_object: #Meaning the user exists in the database
@@ -58,7 +56,7 @@ def when_join(data):
             initiationDataForRoomTab(data["room"])
         else:
             disconnect()
-
+            
     else: #Unkown protocol
         disconnect()
 
