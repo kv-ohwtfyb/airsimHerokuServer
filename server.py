@@ -32,7 +32,8 @@ def when_join(data):
     :return: None, a boolean method but does what's necessarily for the connection.
     """
     print(data.keys())
-    if "password" in data.keys() and "room" not in data.keys() : #If it's a client
+    print(len(data.keys()))
+    if "password" in data.keys(): #If it's a client
         password = data['password']
         user_object = findClient(password)
         if user_object: #Meaning the user exists in the database
