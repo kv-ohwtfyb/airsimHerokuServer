@@ -23,4 +23,4 @@ class Station(db.Model):
 
     __tablename__ = "stations"
     id = db.Column(db.String(20), primary_key=True, nullable=False, unique=True)
-    sensors = db.Column(postgresql.ARRAY(db.Text()), nullable=False)
+    sensors = db.Column(postgresql.JSONB(db.Text()), nullable=False)

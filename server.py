@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, join_room, send, disconnect, emit
 from flask_sqlalchemy import SQLAlchemy
-import os, sqlite3
+import os, json
 import models
 
 #Configure App
@@ -16,14 +16,10 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") #This is 
 
 db = SQLAlchemy(app)
 
-#Variables
-base_dir = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(base_dir, '/database/dbTesting.sqlite')
-
 @app.route("/")
 def helloWorld():
     """
-    Returns a page containing all the activities that went on since the last launch of the server
+    Returns a page stating 'Welcome to the server.'
     """
     return render_template("index.html")
 
@@ -35,7 +31,7 @@ def when_join(data):
     A dict {"password":"id"}
     :return: None, a boolean method but does what's necessarily for the connection.
     """
-    if "password" in data.keys(): #if it's a client
+    if "password" in data.keys() and "password" not in data.keys() : #if it's a client
         password = data['password']
         user_object = findClient(password)
         if user_object: #Meaning the user exists in the database
