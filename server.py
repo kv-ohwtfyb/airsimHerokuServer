@@ -31,8 +31,7 @@ def when_join(data):
     A dict {"password":"id"}
     :return: None, a boolean method but does what's necessarily for the connection.
     """
-    data = dict(data)
-    print(len(data))
+    print(data.keys())
     if "password" in data.keys() and "room" not in data.keys() : #If it's a client
         password = data['password']
         user_object = findClient(password)
