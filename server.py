@@ -31,7 +31,9 @@ def when_join(data):
     A dict {"password":"id"}
     :return: None, a boolean method but does what's necessarily for the connection.
     """
-    if "password" in data.keys() and "room" not in data.keys() : #if it's a client
+    data = dict(data)
+    print(len(data))
+    if "password" in data.keys() and "room" not in data.keys() : #If it's a client
         password = data['password']
         user_object = findClient(password)
         if user_object: #Meaning the user exists in the database
@@ -40,7 +42,7 @@ def when_join(data):
         else:
             disconnect() #Disconnect the user if he is not recognised
 
-    elif "station" in data.keys(): #if it's a station
+    elif "station" in data.keys(): #If it's a station
         username = data['station']
         room = findRoomForStation(username)
         if room:
