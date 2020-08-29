@@ -23,6 +23,7 @@ def helloWorld():
     """
     return render_template("index.html")
 
+
 @socketio.on("join")
 def when_join(data):
     """
@@ -31,7 +32,7 @@ def when_join(data):
     A dict {"password":"id"}
     :return: None, a boolean method but does what's necessarily for the connection.
     """
-    if "password" in data.keys() and len(data.keys())==1: #If it's a client
+    if "password" in data.keys() and "room" not in data.keys(): #If it's a client
         password = data['password']
         user_object = findClient(password)
         if user_object: #Meaning the user exists in the database
@@ -53,12 +54,14 @@ def when_join(data):
         password = data['password']
         user_object = findClient(password)
         if data["room"] in user_object.rooms :
-            initiationDataForRoomTab(data["room"])
+            dict = initiationDataForRoomTab(data["room"])
+            emit("initial", dict)
         else:
             disconnect()
-            
+
     else: #Unkown protocol
         disconnect()
+
 
 @socketio.on('data')
 def stationData(data):
@@ -68,6 +71,7 @@ def stationData(data):
     :return: None
     """
     emit("data", data, room=data["room"])
+
 
 def findRoomForStation(stationId):
     """
@@ -131,6 +135,7 @@ def findStation(stationId):
     except Exception as e:
         print(e)
 
+
 def initiationDataForApp(user_object):
     """
     The function loads up all the initial data to send back to the App.
@@ -160,6 +165,7 @@ def initiationDataForApp(user_object):
     dict["rooms"] = rooms
     return dict
 
+
 def initiationDataForRoomTab(roomId):
     """
     The function loads up all the initial data to send back to the App.
@@ -181,6 +187,7 @@ def initiationDataForRoomTab(roomId):
                 stations_list.append(station_dict)
 
         room_dict["stations"] = stations_list
+    return room_dict
 
 
 if __name__ == '__main__':
