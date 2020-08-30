@@ -32,34 +32,39 @@ def when_join(data):
     A dict {"password":"id"}
     :return: None, a boolean method but does what's necessarily for the connection.
     """
-    if "password" in data.keys() and "room" not in data.keys(): #If it's a client
-        password = data['password']
-        user_object = findClient(password)
-        if user_object: #Meaning the user exists in the database
-            dict = initiationDataForApp(user_object)
-            emit("initial", dict)
-        else:
-            disconnect() #Disconnect the user if he is not recognised
+    try:
+        if "password" in data.keys() and "room" not in data.keys(): #If it's a client
+            password = data['password']
+            user_object = findClient(password)
+            if user_object: #Meaning the user exists in the database
+                dict = initiationDataForApp(user_object)
+                emit("initial", dict)
+            else:
+                disconnect() #Disconnect the user if he is not recognised
 
-    elif "station" in data.keys(): #If it's a station
-        username = data['station']
-        room = findRoomForStation(username)
-        if room:
-            join_room(room)
-            emit("initial", {"room":room})
-        else:
-            disconnect() #Disconnect the user if he is not recognised
+        elif "station" in data.keys(): #If it's a station
+            username = data['station']
+            room = findRoomForStation(username)
+            if room:
+                join_room(room)
+                emit("initial", {"room":room})
+            else:
+                disconnect() #Disconnect the user if he is not recognised
 
-    elif "room" in data.keys() and "password" in data.keys(): #If it's a Room Tab
-        password = data['password']
-        user_object = findClient(password)
-        if data["room"] in user_object.rooms :
-            dict = initiationDataForRoomTab(data["room"])
-            emit("initial", dict)
-        else:
+        elif "room" in data.keys() and "password" in data.keys(): #If it's a Room Tab
+            password = data['password']
+            user_object = findClient(password)
+            if data["room"] in user_object.rooms :
+                dict = initiationDataForRoomTab(data["room"])
+                emit("initial", dict)
+            else:
+                disconnect()
+
+        else: #Unkown protocol
             disconnect()
-
-    else: #Unkown protocol
+            
+    except Exception as e:
+        print(e)
         disconnect()
 
 
