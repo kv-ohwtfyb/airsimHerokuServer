@@ -9,6 +9,8 @@ This repository is connected to a Heroku Server that executes the pushed code he
 This server is code in Python using Flask-SocketIo. The reason why is that *Flask-SocketIO gives Flask applications access to low latency bi-directional
 communications between the clients and the server. The client-side application can use any of the SocketIO client libraries in Javascript, Python, C++, Java and Swift, or any other compatible client to establish a permanent connection to the server.*
 
+There's a SQL database that's connected to the server.
+
 ## Clients 
 
 ### Monitor
